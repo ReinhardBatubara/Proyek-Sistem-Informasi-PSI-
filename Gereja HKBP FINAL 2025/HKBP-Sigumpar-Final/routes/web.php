@@ -6,14 +6,15 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\WartaController;
 use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\LayananGerejaController;
+use App\Http\Controllers\EventController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('halaman.berandagereja.admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [EventController::class, 'events'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::get('/profilegereja', function () {
     return view('halaman.profilegereja.admin.profilegereja');
@@ -35,9 +36,6 @@ Route::get('/pemberitahuan', function () {
     return view('halaman.pemberitahuan.admin.pemberitahuan');
 })->middleware(['auth', 'verified'])->name('pemberitahuan');
 
-// Route::get('/daftarjemaat', function () {
-//     return view('halaman.daftarjemaat.admin.daftarjemaat');
-// })->middleware(['auth', 'verified'])->name('daftarjemaat');
 
 
 Route::middleware('auth')->group(function () {
@@ -54,28 +52,6 @@ Route::get('login/google/callback', [GoogleAuthController::class, 'handleGoogleC
 
 
 Route::get('/warta', [WartaController::class, 'index'])->name('warta');
-
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/admin/daftarjemaat', [JemaatController::class, 'daftarjemaat'])->name('admin.daftarjemaat');
-//     Route::post('/admin/daftarjemaat', [JemaatController::class, 'storejemaat'])->name('admin.storejemaat');
-//     Route::delete('/admin/daftarjemaat/{id}', [JemaatController::class, 'destroyjemaat'])->name('admin.destroyjemaat');
-// });
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/daftarjemaat', [JemaatController::class, 'daftarjemaat'])->name('daftarjemaat');
-
-    Route::get('/admin/daftarjemaat', [JemaatController::class, 'daftarjemaat'])->name('admin.daftarjemaat');
-
-    Route::post('/admin/daftarjemaat', [JemaatController::class, 'storejemaat'])->name('admin.storejemaat');
-
-    Route::delete('/admin/daftarjemaat/{id}', [JemaatController::class, 'destroyjemaat'])->name('admin.destroyjemaat');
-
-    Route::put('/admin/daftarjemaat/{id}', [JemaatController::class, 'updatejemaat'])->name('admin.updatejemaat');
-
-});
-
-
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin/layanan')->group(function () {
     Route::get('martuppol/create', [LayananGerejaController::class, 'createMartuppol'])->name('martuppol.create');
@@ -100,7 +76,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin/layanan')->group(functi
     Route::post('orang-meninggal/store', [LayananGerejaController::class, 'storeOrangMeninggal'])->name('orang_meninggal.store');
 });
 
-use App\Http\Controllers\EventController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('events', EventController::class);

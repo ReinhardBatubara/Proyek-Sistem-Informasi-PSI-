@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    // Menampilkan semua event
     public function index()
+    {
+        return $this->events();
+    }
+
+    // Menampilkan semua event
+    public function events()
     {
         $events = Event::latest()->get();
         // Pastikan mengirim ke view yang benar sesuai struktur folder kamu
