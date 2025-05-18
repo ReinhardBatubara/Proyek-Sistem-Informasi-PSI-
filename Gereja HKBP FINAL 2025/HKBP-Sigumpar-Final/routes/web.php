@@ -99,3 +99,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin/layanan')->group(functi
     Route::get('orang-meninggal/create', [LayananGerejaController::class, 'createOrangMeninggal'])->name('orang_meninggal.create');
     Route::post('orang-meninggal/store', [LayananGerejaController::class, 'storeOrangMeninggal'])->name('orang_meninggal.store');
 });
+
+use App\Http\Controllers\EventController;
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('events', EventController::class);
+});
+
