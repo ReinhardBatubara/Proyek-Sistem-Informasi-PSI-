@@ -3,162 +3,110 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LayananGereja\Martuppol;
-use App\Models\LayananGereja\BatchNaikSidi;
-use App\Models\LayananGereja\NaikSidi;
-use App\Models\LayananGereja\Pernikahan;
-use App\Models\LayananGereja\AnakLahir;
-use App\Models\LayananGereja\JemaatSakit;
-use App\Models\LayananGereja\KunjunganMakam;
-use App\Models\LayananGereja\OrangMeninggal;
+use App\Models\LayananGereja;
+use Illuminate\Support\Facades\Storage;
 
 class LayananGerejaController extends Controller
 {
-    public function createMartuppol()
+    // Menampilkan daftar layanan yang tersedia dan tombol pilih layanan
+    public function index()
     {
-        return view('admin.layanan.martuppol.create');
+        $layanans = [
+            ['kode' => 'martuppol', 'nama' => 'Martuppol', 'status' => true],
+            ['kode' => 'naik_sidi', 'nama' => 'Pendaftaran Naik Sidi', 'status' => true],
+            ['kode' => 'pernikahan', 'nama' => 'Pendaftaran Pernikahan', 'status' => true],
+            ['kode' => 'baptis', 'nama' => 'Pendaftaran Baptis', 'status' => true],
+            ['kode' => 'jemaat_sakit', 'nama' => 'Pemberitahuan Jemaat Sakit', 'status' => true],
+            ['kode' => 'anak_lahir', 'nama' => 'Pemberitahuan Anak Lahir', 'status' => true],
+            ['kode' => 'jemaat_meninggal', 'nama' => 'Pemberitahuan Jemaat Meninggal Dunia', 'status' => true],
+            ['kode' => 'kunjungan_makam', 'nama' => 'Pemesanan Kunjungan Makam', 'status' => true],
+            ['kode' => 'pemesanan_gedung', 'nama' => 'Pemesanan Gedung', 'status' => true],
+        ];
+
+        return view('halaman.layanangereja.admin.layanan', compact('layanans'));
     }
 
-    public function storeMartuppol(Request $request)
+    // Tampilkan form sesuai layanan yang dipilih
+    public function create(Request $request)
     {
-        $request->validate([
-            'nama_pemohon' => 'required|string|max:255',
-            'tanggal_martuppol' => 'required|date|after_or_equal:today',
-        ]);
+        $jenis = $request->query('jenis');
 
-        Martuppol::create($request->only('nama_pemohon', 'tanggal_martuppol'));
-
-        return redirect()->back()->with('success', 'Martuppol berhasil didaftarkan.');
-    }
-
-    public function createNaikSidi()
-    {
-        $batches = BatchNaikSidi::all();
-        return view('admin.layanan.naik_sidi.create', compact('batches'));
-    }
-
-    public function storeNaikSidi(Request $request)
-    {
-        $request->validate([
-            'nama_jemaat' => 'required|string|max:255',
-            'batch_id' => 'required|exists:batch_naik_sidis,id',
-            'akta_upload' => 'nullable|file|mimes:pdf,jpg,png',
-            'surat_baptis_upload' => 'nullable|file|mimes:pdf,jpg,png',
-        ]);
-
-        $data = $request->only('nama_jemaat', 'batch_id');
-
-        if ($request->hasFile('akta_upload')) {
-            $data['akta_upload'] = $request->file('akta_upload')->store('dokumen/akta');
-        }
-        if ($request->hasFile('surat_baptis_upload')) {
-            $data['surat_baptis_upload'] = $request->file('surat_baptis_upload')->store('dokumen/surat_baptis');
+        if (! $jenis) {
+            return redirect()->route('layanangereja.index')->with('error', 'Pilih layanan terlebih dahulu.');
         }
 
-        NaikSidi::create($data);
+        // Bisa buat validasi jenis layanan apakah valid
 
-        return redirect()->back()->with('success', 'Pendaftaran naik sidi berhasil.');
+        return view('halaman.layanangereja.admin.layanan_form', compact('jenis'));
     }
 
-    public function createPernikahan()
+    // Simpan data layanan dari form
+    public function store(Request $request)
     {
-        return view('admin.layanan.pernikahan.create');
-    }
+        $jenis = $request->input('jenis_layanan');
 
-    public function storePernikahan(Request $request)
-    {
-        $request->validate([
-            'nama_calon_suami' => 'required|string|max:255',
-            'nama_calon_istri' => 'required|string|max:255',
-            'tanggal_pernikahan' => 'required|date|after_or_equal:today',
-            'dokumen_upload' => 'nullable|file|mimes:pdf,jpg,png',
-        ]);
+        // Validasi umum
+        $rules = [
+            'nama_jemaat' => 'required|string|max:255',
+            'no_telepon' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string|max:255',
+            'tanggal_layanan' => 'nullable|date|after_or_equal:today',
+        ];
 
-        $data = $request->only('nama_calon_suami', 'nama_calon_istri', 'tanggal_pernikahan');
-
-        if ($request->hasFile('dokumen_upload')) {
-            $data['dokumen_upload'] = $request->file('dokumen_upload')->store('dokumen/pernikahan');
+        // Validasi dokumen dan ketentuan sesuai jenis layanan
+        switch ($jenis) {
+            case 'baptis':
+                $rules['surat_keterangan_warga'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['surat_nikah'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                break;
+            case 'naik_sidi':
+                $rules['surat_keterangan_warga'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['surat_baptis'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['akta'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                break;
+            case 'martuppol':
+                $rules['surat_keterangan_warga'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['surat_baptis'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['surat_naik_sidi'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                break;
+            case 'pernikahan':
+                $rules['surat_martuppol'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['surat_baptis'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                $rules['surat_naik_sidi'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+                // Konseling dihapus sesuai permintaan
+                break;
+            case 'jemaat_sakit':
+                $rules['wijk'] = 'required|string|max:255'; // ganti keterangan penyakit
+                break;
+            case 'jemaat_meninggal':
+                $rules['lingkungan'] = 'required|string|max:255';
+                $rules['tanggal_layanan'] = 'required|date|after_or_equal:today';
+                break;
+            default:
+                // Aturan lain jika perlu
+                break;
         }
 
-        Pernikahan::create($data);
+        $validated = $request->validate($rules);
 
-        return redirect()->back()->with('success', 'Pendaftaran pernikahan berhasil.');
-    }
+        // Upload file jika ada
+        $fileFields = [
+            'surat_keterangan_warga',
+            'surat_baptis',
+            'surat_naik_sidi',
+            'surat_martuppol',
+            'akta',
+            'dokumen_pranikah',
+        ];
 
-    public function createAnakLahir()
-    {
-        return view('admin.layanan.anak_lahir.create');
-    }
+        foreach ($fileFields as $field) {
+            if ($request->hasFile($field)) {
+                $validated[$field] = $request->file($field)->store('dokumen_layanan', 'public');
+            }
+        }
 
-    public function storeAnakLahir(Request $request)
-    {
-        $request->validate([
-            'nama_anak' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date|before_or_equal:today',
-            'nama_ortu' => 'required|string|max:255',
-        ]);
+        LayananGereja::create($validated);
 
-        AnakLahir::create($request->only('nama_anak', 'tanggal_lahir', 'nama_ortu'));
-
-        return redirect()->back()->with('success', 'Pendataan anak lahir berhasil.');
-    }
-
-    public function createJemaatSakit()
-    {
-        return view('admin.layanan.jemaat_sakit.create');
-    }
-
-    public function storeJemaatSakit(Request $request)
-    {
-        $request->validate([
-            'nama_jemaat' => 'required|string|max:255',
-            'wijk' => 'required|string|max:255',
-            'keterangan' => 'nullable|string|max:255',
-        ]);
-
-        JemaatSakit::create($request->only('nama_jemaat', 'wijk', 'keterangan'));
-
-        return redirect()->back()->with('success', 'Pendataan jemaat sakit berhasil.');
-    }
-
-    public function createKunjunganMakam()
-    {
-        return view('admin.layanan.kunjungan_makam.create');
-    }
-
-    public function storeKunjunganMakam(Request $request)
-    {
-        $request->validate([
-            'nama_jemaat' => 'required|string|max:255',
-            'tanggal_kunjungan' => 'required|date|after_or_equal:today',
-            'pendeta_ikut' => 'sometimes|boolean',
-            'kunci_disediakan' => 'sometimes|boolean',
-        ]);
-
-        $data = $request->only('nama_jemaat', 'tanggal_kunjungan');
-        $data['pendeta_ikut'] = $request->has('pendeta_ikut');
-        $data['kunci_disediakan'] = $request->has('kunci_disediakan');
-
-        KunjunganMakam::create($data);
-
-        return redirect()->back()->with('success', 'Pemesanan kunjungan makam berhasil.');
-    }
-
-    public function createOrangMeninggal()
-    {
-        return view('admin.layanan.orang_meninggal.create');
-    }
-
-    public function storeOrangMeninggal(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'tanggal_meninggal' => 'required|date|before_or_equal:today',
-            'lingkungan' => 'required|string|max:255',
-        ]);
-
-        OrangMeninggal::create($request->only('nama', 'tanggal_meninggal', 'lingkungan'));
-
-        return redirect()->back()->with('success', 'Pendataan orang meninggal berhasil.');
+        return redirect()->route('layanangereja.index')->with('success', 'Form layanan berhasil disimpan.');
     }
 }

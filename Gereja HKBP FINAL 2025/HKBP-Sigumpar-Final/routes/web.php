@@ -53,31 +53,20 @@ Route::get('login/google/callback', [GoogleAuthController::class, 'handleGoogleC
 
 Route::get('/warta', [WartaController::class, 'index'])->name('warta');
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin/layanan')->group(function () {
-    Route::get('martuppol/create', [LayananGerejaController::class, 'createMartuppol'])->name('martuppol.create');
-    Route::post('martuppol/store', [LayananGerejaController::class, 'storeMartuppol'])->name('martuppol.store');
-
-    Route::get('naik-sidi/create', [LayananGerejaController::class, 'createNaikSidi'])->name('naik_sidi.create');
-    Route::post('naik-sidi/store', [LayananGerejaController::class, 'storeNaikSidi'])->name('naik_sidi.store');
-
-    Route::get('pernikahan/create', [LayananGerejaController::class, 'createPernikahan'])->name('pernikahan.create');
-    Route::post('pernikahan/store', [LayananGerejaController::class, 'storePernikahan'])->name('pernikahan.store');
-
-    Route::get('anak-lahir/create', [LayananGerejaController::class, 'createAnakLahir'])->name('anak_lahir.create');
-    Route::post('anak-lahir/store', [LayananGerejaController::class, 'storeAnakLahir'])->name('anak_lahir.store');
-
-    Route::get('jemaat-sakit/create', [LayananGerejaController::class, 'createJemaatSakit'])->name('jemaat_sakit.create');
-    Route::post('jemaat-sakit/store', [LayananGerejaController::class, 'storeJemaatSakit'])->name('jemaat_sakit.store');
-
-    Route::get('kunjungan-makam/create', [LayananGerejaController::class, 'createKunjunganMakam'])->name('kunjungan_makam.create');
-    Route::post('kunjungan-makam/store', [LayananGerejaController::class, 'storeKunjunganMakam'])->name('kunjungan_makam.store');
-
-    Route::get('orang-meninggal/create', [LayananGerejaController::class, 'createOrangMeninggal'])->name('orang_meninggal.create');
-    Route::post('orang-meninggal/store', [LayananGerejaController::class, 'storeOrangMeninggal'])->name('orang_meninggal.store');
-});
-
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('events', EventController::class);
 });
 
+
+// Route::middleware(['auth', 'verified'])->group(function() {
+//     Route::get('/layanan', [LayananGerejaController::class, 'index'])->name('layanan.index');
+//     Route::get('/layanan/create', [LayananGerejaController::class, 'create'])->name('layanan.create');
+//     Route::post('/layanan', [LayananGerejaController::class, 'store'])->name('layanan.store');
+// });
+
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/layanangereja', [LayananGerejaController::class, 'index'])->name('layanangereja.index');
+    Route::get('/layanangereja/create', [LayananGerejaController::class, 'create'])->name('layanangereja.create');
+    Route::post('/layanangereja', [LayananGerejaController::class, 'store'])->name('layanangereja.store');
+});
