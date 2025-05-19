@@ -12,6 +12,7 @@
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">
                     + Tambah Data
                 </a>
+
             </div>
 
             {{-- Filter tanggal --}}
@@ -37,9 +38,9 @@
                         <tr>
                             <th class="px-4 py-3 text-left text-sm font-semibold">Tanggal</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold">Jumlah</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold">Gender</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold">Jenis Kelamin</th>
                             <th class="px-4 py-3 text-left text-sm font-semibold">Kategori Usia</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold">Aksi</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-100">

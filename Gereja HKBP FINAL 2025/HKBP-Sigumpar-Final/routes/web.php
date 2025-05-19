@@ -80,7 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('congregations', CongregationController::class)->except(['show']);
     Route::resource('congregations', CongregationController::class);
     Route::get('/admin/congregations', [CongregationController::class, 'index'])->name('halaman.congregations.index');
-    Route::get('/congregations/stats', [CongregationController::class, 'stats'])->name('halaman.congregations.stats');
     Route::get('/congregations/{id}/edit', [CongregationController::class, 'edit'])->name('congregations.edit');
     Route::put('/congregations/{id}', [CongregationController::class, 'update'])->name('congregations.update');
+    Route::get('/congregations/statistics', [CongregationController::class, 'statistics'])->name('congregations.statistics');
 });
