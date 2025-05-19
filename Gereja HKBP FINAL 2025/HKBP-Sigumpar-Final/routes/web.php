@@ -7,6 +7,9 @@ use App\Http\Controllers\WartaController;
 use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\LayananGerejaController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CongregationController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 Route::get('login/google', [GoogleAuthController::class, 'redirectToGoogle']);
@@ -65,8 +68,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 //     Route::post('/layanan', [LayananGerejaController::class, 'store'])->name('layanan.store');
 // });
 
-Route::middleware(['auth', 'verified'])->group(function() {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/layanangereja', [LayananGerejaController::class, 'index'])->name('layanangereja.index');
     Route::get('/layanangereja/create', [LayananGerejaController::class, 'create'])->name('layanangereja.create');
     Route::post('/layanangereja', [LayananGerejaController::class, 'store'])->name('layanangereja.store');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // ✅ Congregation
+    Route::resource('congregations', CongregationController::class)->except(['show']);
+    Route::resource('congregations', CongregationController::class);
+    Route::get('/admin/congregations', [CongregationController::class, 'index'])->name('halaman.congregations.index');
+    Route::get('/congregations/stats', [CongregationController::class, 'stats'])->name('halaman.congregations.stats');
+    Route::get('/congregations/{id}/edit', [CongregationController::class, 'edit'])->name('congregations.edit');
+    Route::put('/congregations/{id}', [CongregationController::class, 'update'])->name('congregations.update');
 });
