@@ -7,7 +7,7 @@
 
         <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow-md">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-semibold text-gray-700">Daftar Jemaat</h3>
+                <h3 class="text-xl font-semibold text-gray-700">Data Jemaat</h3>
                 <a href="{{ route('congregations.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition">
                     + Tambah Data
