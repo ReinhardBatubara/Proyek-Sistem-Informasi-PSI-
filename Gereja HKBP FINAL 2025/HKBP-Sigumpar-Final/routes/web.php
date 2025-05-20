@@ -12,7 +12,10 @@ use App\Http\Controllers\CongregationController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.welcome');
+});
+Route::get('/profil', function () {
+    return view('home.profil');
 });
 
 Route::get('/dashboard', [EventController::class, 'events'])
@@ -22,6 +25,7 @@ Route::get('/dashboard', [EventController::class, 'events'])
 Route::get('/profilegereja', function () {
     return view('halaman.profilegereja.admin.profilegereja');
 })->middleware(['auth', 'verified'])->name('profilegereja');
+
 
 Route::get('/jadwal', function () {
     return view('halaman.jadwalgereja.admin.jadwal');
