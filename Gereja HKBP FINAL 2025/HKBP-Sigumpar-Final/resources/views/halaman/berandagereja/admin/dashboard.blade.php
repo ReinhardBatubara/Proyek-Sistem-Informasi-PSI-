@@ -1,6 +1,8 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
@@ -56,7 +58,7 @@
 
             <a href="{{ route('admin.events.create') }}" class="btn btn-primary mb-4">Tambah Event Baru</a>
 
-            @if(session('success'))
+            @if (session('success'))
                 <div class="alert alert-success mb-4">{{ session('success') }}</div>
             @endif
 
@@ -65,19 +67,22 @@
 
                 <div class="carousel" id="carousel">
                     @foreach ($events as $index => $event)
-                    <div class="card @if($index == 0) active @endif" role="group" aria-roledescription="slide" aria-label="Slide {{ $index + 1 }}">
-                        <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->title }}">
-                        <div class="info">
-                            <h3>{{ $event->title }}</h3>
-                            <p>{{ Str::limit($event->description, 150) }}</p>
-                            <a href="{{ route('admin.events.edit', $event->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin hapus event ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
+                        <div class="card @if ($index == 0) active @endif" role="group"
+                            aria-roledescription="slide" aria-label="Slide {{ $index + 1 }}">
+                            <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->title }}">
+                            <div class="info">
+                                <h3>{{ $event->title }}</h3>
+                                <p>{{ Str::limit($event->description, 150) }}</p>
+                                <a href="{{ route('admin.events.edit', $event->id) }}"
+                                    class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST"
+                                    style="display:inline-block;" onsubmit="return confirm('Yakin hapus event ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
 
@@ -86,13 +91,9 @@
 
             <div class="indicators" id="indicators" role="tablist" aria-label="Event slide indicators">
                 @foreach ($events as $index => $event)
-                    <span 
-                        onclick="goToSlide({{ $index }})" 
-                        class="dot @if($index == 0) active @endif" 
-                        role="tab" 
-                        tabindex="0" 
-                        aria-selected="{{ $index == 0 ? 'true' : 'false' }}" 
-                        aria-controls="slide{{ $index + 1 }}"
+                    <span onclick="goToSlide({{ $index }})"
+                        class="dot @if ($index == 0) active @endif" role="tab" tabindex="0"
+                        aria-selected="{{ $index == 0 ? 'true' : 'false' }}" aria-controls="slide{{ $index + 1 }}"
                         aria-label="Go to slide {{ $index + 1 }}">
                     </span>
                 @endforeach
