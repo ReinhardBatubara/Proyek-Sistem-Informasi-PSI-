@@ -44,6 +44,11 @@
                     Profil
                 </a>
 
+                <a href="{{ url('/jadwal') }}"
+                    class="px-4 py-2 rounded-md text-[#6B4F29] hover:bg-[#f0eae3] hover:text-[#4a361e] transition duration-300 font-medium">
+                    Kegiatan
+                </a>
+
                 @auth
                     <a href="{{ url('/dashboard') }}"
                         class="px-4 py-2 rounded-md text-[#6B4F29] hover:bg-[#f0eae3] hover:text-[#4a361e] transition duration-300 font-medium">
