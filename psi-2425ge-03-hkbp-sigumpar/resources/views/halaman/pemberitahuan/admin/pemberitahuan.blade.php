@@ -70,10 +70,29 @@
                         </div>
                     </form>
 
+<<<<<<< Updated upstream
                     <!-- Tampilkan File Sertifikat jika ada -->
                     @if ($layanan->file_path && $layanan->status === 'Selesai')
                         <div class="flex items-center justify-between mt-4">
                             <a href="{{ Storage::url($layanan->file_path) }}" target="_blank" class="text-sm text-blue-600 hover:underline">Lihat File Disini</a>
+=======
+                    {{-- Tampilkan file dan tombol hapus hanya jika status 'Selesai' dan ada file --}}
+                    @if ($layanan->status == 'Selesai' && $layanan->file_path)
+                        <div class="flex items-center justify-between mt-4 p-3 bg-gray-50 rounded-lg">
+                            {{-- Link untuk melihat file --}}
+                            <a href="{{ Storage::url($layanan->file_path) }}" target="_blank" class="text-sm text-blue-600 hover:underline">
+                                Lihat File Sertifikat
+                            </a>
+
+                            {{-- Tombol Hapus File --}}
+                            <form action="{{ route('layanangereja.removeFile', $layanan->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus file sertifikat ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-xs">
+                                    Hapus Files
+                                </button>
+                            </form>
+>>>>>>> Stashed changes
                         </div>
                     @endif
 

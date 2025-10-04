@@ -21,9 +21,9 @@ class RolePermissionSeeder extends Seeder
 
         if (!$userOwner) {
             $userOwner = User::create([
-                'name' => 'admin',
-                'email' => 'admin@gmail.com',
-                'password' => bcrypt('123123123'),
+                'name' => 'HKBP',
+                'email' => 'sigumparhkbpnommensen@gmail.com',
+                'password' => bcrypt('HKBPnommensenSigumpar01'),
                 'role'=> 'admin',
             ]);
         }
