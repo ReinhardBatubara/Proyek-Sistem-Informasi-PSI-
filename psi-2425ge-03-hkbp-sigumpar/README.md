@@ -1,61 +1,180 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ⛪ Sistem Informasi & Layanan Administrasi Jemaat HKBP Sigumpar
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-12.0-red?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-blue?style=for-the-badge&logo=php)](https://php.net)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38bdf8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646cff?style=for-the-badge&logo=vite)](https://vite.dev)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-orange?style=for-the-badge&logo=mysql)](https://mysql.com)
 
-## About Laravel
+Sistem Informasi & Layanan Administrasi Jemaat **HKBP Sigumpar** adalah platform web modern berbasis **Laravel 12** yang dirancang untuk mendigitalisasi manajemen data jemaat, mempermudah pengajuan layanan sakramen/administrasi gereja, serta menyajikan warta dan jadwal ibadah secara terintegrasi bagi seluruh jemaat HKBP Sigumpar.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👥 1. Manajemen Jemaat & Statistik (Admin)
+*   **Database Jemaat Terpusat:** Pengelolaan data jemaat secara aman (CRUD: *Create, Read, Update, Delete*).
+*   **Statistik Penduduk Jemaat:** Visualisasi dan analisis demografi jemaat (usia, jenis kelamin, sektor pelayanan) untuk mempermudah perencanaan program pelayanan gereja.
 
-## Learning Laravel
+### 📝 2. Layanan Administrasi Jemaat Online
+Jemaat yang terautentikasi dapat mengajukan pendaftaran layanan gereja secara daring, mengunggah berkas persyaratan, dan melacak status pengajuannya:
+*   **Pendaftaran Baptisan Kudus**
+*   **Pendaftaran Sidi (Konfirmasi)**
+*   **Pendaftaran Pernikahan (Pamasu-masuon)**
+*   **Pendaftaran Rapor Meninggal (Pemakaman)**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔔 3. Sistem Pemberitahuan & Tracking (Twilio & Web)
+*   **Pemberitahuan Real-Time:** Jemaat menerima update status pengajuan layanan (Diterima / Ditolak beserta alasannya) langsung di halaman akun mereka.
+*   **Integrasi SMS/WhatsApp (Twilio SDK):** Fitur pengiriman notifikasi otomatis ke nomor handphone jemaat untuk pengingat jadwal dan pembaruan berkas administrasi.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📅 4. Warta Jemaat & Jadwal Ibadah Dinamis
+*   **Jadwal Ibadah:** Pengumuman jadwal ibadah minggu dan ibadah sektor (*Wijk*) dengan fitur pembaruan massal (*mass-update*) untuk admin.
+*   **Warta Jemaat Digital:** Publikasi berita mingguan gereja, laporan keuangan, dan pengumuman penting yang dapat diakses langsung oleh publik tanpa login.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🛡️ 5. Manajemen Keamanan & Otentikasi Ganda
+*   **Google OAuth (Laravel Socialite):** Memungkinkan jemaat login dengan cepat dan aman menggunakan akun Google mereka.
+*   **Role-Based Access Control (Spatie Laravel Permission):** Pembagian hak akses yang ketat antara **Admin**, **Pendeta**, dan **Jemaat** untuk melindungi kerahasiaan data jemaat.
+*   **Laravel Breeze Starter Kit:** Sistem login, registrasi, dan manajemen profil bawaan yang kokoh dan responsif.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🛠️ Tech Stack & Integrasi
 
-### Premium Partners
+*   **Framework Utama:** Laravel 12.x (PHP 8.2+)
+*   **Starter Kit & Auth:** Laravel Breeze (Blade/Tailwind) & Laravel Socialite (Google OAuth)
+*   **Sistem Otorisasi:** Spatie Laravel Permission
+*   **Notifikasi SMS/WhatsApp:** Twilio PHP SDK
+*   **Desain & UI:** Tailwind CSS & Alpine.js
+*   **Build Tool:** Vite 6.x
+*   **Database:** MySQL / SQLite
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 📂 Struktur Direktori Proyek
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Aplikasi utama berada di dalam folder `psi-2425ge-03-hkbp-sigumpar`. Berikut adalah peta struktur kode penting:
 
-## Code of Conduct
+```bash
+psi-2425ge-03-hkbp-sigumpar/
+├── app/
+│   ├── Http/Controllers/      # Logika Kontroler (Auth, Layanan, Warta, Jemaat)
+│   └── Models/                # Model Data Eloquent (User, LayananGereja, Jadwal, dll)
+├── bootstrap/                 # Bootstrapping Laravel
+├── config/                    # Konfigurasi Layanan (Auth, Spatie, Socialite, Twilio)
+├── database/
+│   ├── migrations/            # Skema Tabel Basis Data (Users, Jadwal, Layanan, dll)
+│   └── seeders/               # Data Awal Sistem (Role, Profil Gereja, Tipe Layanan)
+├── public/                    # Aset Publik (Gambar, CSS, JS terkompilasi)
+├── resources/
+│   ├── views/                 # Template Blade UI (Halaman Utama, Admin Dashboard, Profil)
+│   └── css/                   # Pengaturan Tailwind CSS
+├── routes/
+│   ├── web.php                # Rute Halaman Utama & Akses Authenticated
+│   └── auth.php               # Rute Registrasi & Login Breeze
+└── vite.config.js             # Konfigurasi Kompilasi Vite
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ⚙️ Petunjuk Instalasi & Pengembangan Lokal
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Ikuti langkah-langkah di bawah ini untuk menjalankan sistem di komputer lokal Anda:
 
-## License
+### 1. Prasyarat Sistem
+*   **PHP >= 8.2** terpasang di komputer Anda.
+*   **Composer** untuk manajemen dependensi PHP.
+*   **Node.js & NPM** untuk build asset frontend.
+*   **MySQL Database** server (bisa menggunakan XAMPP, Laragon, atau MySQL Native).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 2. Kloning Repositori
+```bash
+git clone https://github.com/ReinhardBatubara/gerejaversi2.git
+cd gerejaversi2/psi-2425ge-03-hkbp-sigumpar
+```
+
+### 3. Pasang Dependensi
+```bash
+# Pasang dependensi PHP Laravel
+composer install
+
+# Pasang dependensi Frontend Javascript
+npm install
+```
+
+### 4. Konfigurasi Lingkungan (`.env`)
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Buka file `.env` yang baru dibuat dan sesuaikan konfigurasi berikut:
+
+*   **Database Config:**
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=db_hkbp_sigumpar
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+*   **Google OAuth Config (Laravel Socialite):**
+    ```env
+    GOOGLE_CLIENT_ID=your-google-client-id
+    GOOGLE_CLIENT_SECRET=your-google-client-secret
+    GOOGLE_REDIRECT_URI="${APP_URL}/login/google/callback"
+    ```
+*   **Twilio Config (SMS/WhatsApp):**
+    ```env
+    TWILIO_SID=your-twilio-sid
+    TWILIO_AUTH_TOKEN=your-twilio-auth-token
+    TWILIO_NUMBER=your-twilio-phone-number
+    ```
+
+### 5. Generate Application Key
+```bash
+php artisan key:generate
+```
+
+### 6. Jalankan Migrasi Database & Seeder
+Buat database kosong bernama `db_hkbp_sigumpar` di MySQL Anda, lalu jalankan perintah berikut untuk membuat tabel dan mengisi data awal (roles, default profiles, tipe layanan):
+```bash
+php artisan migrate --seed
+```
+
+### 7. Jalankan Server Pengembangan
+Jalankan server PHP artisan dan Vite secara bersamaan menggunakan perintah shortcut:
+```bash
+# Menjalankan server Laravel & kompilasi aset frontend
+composer dev
+```
+Atau jalankan secara terpisah di dua terminal berbeda:
+```bash
+# Terminal 1: Menjalankan backend Laravel
+php artisan serve
+
+# Terminal 2: Menjalankan kompilasi frontend Vite
+npm run dev
+```
+
+Buka browser Anda dan akses aplikasi di **`http://127.0.0.1:8000`**.
+
+---
+
+## 🔑 Akun Uji Coba Default (Seeders)
+
+Setelah menjalankan `php artisan db:seed`, Anda dapat menggunakan akun simulasi berikut untuk menguji sistem:
+
+*   **Role Admin:**
+    *   Email: `admin@drs.com` *(atau sesuai set di DatabaseSeeder)*
+    *   Password: `password`
+*   **Role Pendeta:**
+    *   Email: `pendeta@drs.com`
+    *   Password: `password`
+*   **Role Jemaat:**
+    *   Email: `jemaat@drs.com`
+    *   Password: `password`
+
+---
+
+## 🏛️ Lisensi
+Proyek ini dibuat untuk mendukung digitalisasi pelayanan gereja **HKBP Sigumpar** dan menggunakan lisensi open-source **MIT**.
