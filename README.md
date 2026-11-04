@@ -16,15 +16,15 @@ Penggabungan seluruh repositori terpisah dilakukan dengan **mempertahankan riway
 
 Monorepo ini menyatukan 3 iterasi repositori pengembangan ke dalam sub-direktori berikut:
 
-### 1. [gerejaversi3](file:///C:/Users/acer/AppData/Local/Temp/psi_combine/Proyek-Sistem-Informasi-PSI-/gerejaversi3)
+### 1. [gerejaversi3](gerejaversi3)
 *   **Deskripsi**: Iterasi final dan stabil dari sistem informasi HKBP Sigumpar. Memuat fitur autentikasi Google OAuth API (`authentikasi google`) dan basis sistem yang siap digunakan secara publik (`Gereja HKBP FINAL 2025`).
 *   **Lokasi Direktori**: `gerejaversi3/`
 
-### 2. [HKBP-Nomensen-Sigumpar](file:///C:/Users/acer/AppData/Local/Temp/psi_combine/Proyek-Sistem-Informasi-PSI-/HKBP-Nomensen-Sigumpar)
+### 2. [HKBP-Nomensen-Sigumpar](HKBP-Nomensen-Sigumpar)
 *   **Deskripsi**: Versi publikasi utama dengan optimalisasi performa query data jemaat, perbaikan UI dashboard jemaat, dan layout warta jemaat berbasis web responsive.
 *   **Lokasi Direktori**: `HKBP-Nomensen-Sigumpar/`
 
-### 3. [gerejaversi2](file:///C:/Users/acer/AppData/Local/Temp/psi_combine/Proyek-Sistem-Informasi-PSI-/gerejaversi2)
+### 3. [gerejaversi2](gerejaversi2)
 *   **Deskripsi**: Iterasi pengembangan tahap menengah yang memetakan modul CRUD dasar untuk administrasi, penjadwalan ibadah, dan registrasi pelayanan gereja.
 *   **Lokasi Direktori**: `gerejaversi2/`
 
